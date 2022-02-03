@@ -13,37 +13,36 @@ namespace Parser
             public string Text;
             public int Count;
         }
-
-
+        
         public static void Main(string[] args)
         {
-            string filePath = @"c:\errorlist.txt";
+            string filePath =  @"c:\errorlist.txt";
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             char[] dividers = { ' ', ',', '.', '!', '?', ';', ':', '[', ']', '"', '(', ')', '\n', '\r', '\t', '<', '>', '\'' };
 
             Console.WriteLine("ENTER LINK HERE:");
+
             string htmlPage = Console.ReadLine();
 
             try
             {
-                string pageCheck = (string)htmlPage;
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load(htmlPage);
 
                 var htmlNodes = doc.DocumentNode.SelectNodes("//html");
 
-                List<string> nodeString = new List<string>();
-                List<string> uniqueWords = new List<string>();
                 string[] allWords;
+
+                List<string> nodeString = new List<string>();
+                List<string> uniqueWords = new List<string>();                
 
                 foreach (var node in htmlNodes)
                 {
                     try
                     {
                         string result = node.InnerText.ToUpper();
-                        nodeString.Add(result);
-
+                        nodeString.Add(result);                        
 
                         foreach (string n in nodeString)
                         {
@@ -56,14 +55,12 @@ namespace Parser
                             foreach (var word in groupedCount)
                             {
                                 UniqueWord output = new UniqueWord();
-                                var T = output.Text = word.key;
-                                var C = output.Count = word.count;
-
+                                output.Text = word.key;
+                                output.Count = word.count;
                                 Console.WriteLine(output.Text + "-" + output.Count);
                             }
                         }
                     }
-
 
                     catch
                     {
